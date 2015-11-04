@@ -49,11 +49,13 @@ module Fitgem
     #   DateTime, Time, or a valid ("HH:mm" or "now") string object
     # @return [String] Date in "HH:mm" string format
     def format_time(time, opts = {})
-      format = opts[:include_timezone] ? "%H:%M%:z" : "%H:%M"
+      #format = opts[:include_timezone] ? "%H:%M%:z" : "%H:%M"
+      format = "%H:%M"
       if time.is_a? String
         case time
           when 'now'
-            return DateTime.now.strftime format
+            #return DateTime.now.strftime format
+            return format_time(DateTime.now, opts)
           else
             unless time =~ /^\d{2}\:\d{2}$/
               raise Fitgem::InvalidTimeArgument, "Invalid time (#{time}), must be in HH:mm format"
@@ -61,8 +63,22 @@ module Fitgem
             timezone = DateTime.now.strftime("%:z")
             return opts[:include_timezone] ? [ time, timezone ].join : time
         end
-      elsif DateTime === time || Time === time
+      elsif DateTime === time 
+        format = opts[:include_timezone] ? "%H:%M%:z" : "%H:%M"
         return time.strftime format
+        #datetime = time
+        #time = Time.utc(datetime.year, datetime.month, datetime.day, datetime.hour, datetime.min, datetime.sec)
+        #base = time.strftime format
+        #if opts[:include_timezone]
+        #  base += "#{time.offset< 0 ? "-" : "+"}%02d:%02d" %(time.offset*24/60).abs.divmod(60)
+        #end
+        return base
+      elsif Time === time
+        base = time.strftime format
+        if opts[:include_timezone]
+          base += "#{time.gmt_offset < 0 ? "-" : "+"}%02d:%02d" %(time.gmt_offset/60).abs.divmod(60)
+        end
+        return base
       else
         raise Fitgem::InvalidTimeArgument, "Date used must be a valid time object or a string in the format HH:mm; supplied argument is a #{time.class}"
       end
@@ -105,7 +121,9 @@ module Fitgem
           raise ConnectionRequiredError, "No connection to Fitbit API; one is required when passing respect_user_unit_preferences=true"
         end
         # Cache the unit systems for the current user
-        @unit_systems ||= self.user_info['user'].select {|key, value| key =~ /Unit$/ }
+        #@unit_systems ||= self.user_info['user'].select {|key, value| key =~ /Unit$/ }
+        #@unit_systems ||= self.user_info['user'].select {|key, value| key.end_with?("Unit") }
+        @unit_systems ||= self.user_info['user'].delete_if{|key, value| !key.end_with?("Unit") }
 
         case measurement_type
           when :distance
