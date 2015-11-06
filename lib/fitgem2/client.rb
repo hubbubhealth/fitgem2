@@ -145,7 +145,7 @@ module Fitgem
     #   needed to make API calls, since it is stored internally.  It is
     #   returned so that you may make general OAuth calls if need be.
     def authorize(token, secret, opts={})
-      request_token = OAuth::RequestToken.new(consumer, token, secret)
+      request_token = OAuth2::RequestToken.new(consumer, token, secret)
       @access_token = request_token.get_access_token(opts)
       @token = @access_token.token
       @secret = @access_token.secret
@@ -202,7 +202,7 @@ module Fitgem
     private
 
       def consumer
-        @consumer ||= OAuth::Consumer.new(@consumer_key, @consumer_secret, {
+        @consumer ||= OAuth2::Client.new(@consumer_key, @consumer_secret, {
           :site => 'https://api.fitbit.com',
           :authorize_url => 'https://www.fitbit.com/oauth/authorize',
           :proxy => @proxy
@@ -210,7 +210,8 @@ module Fitgem
       end
 
       def access_token
-        @access_token ||= OAuth::AccessToken.new(consumer, @token, @secret)
+        #@access_token ||= OAuth2::AccessToken.new(consumer, @token, @secret)
+        @access_token ||= OAuth2::AccessToken.new(consumer, @token)
       end
 
       def get(path, headers={})
