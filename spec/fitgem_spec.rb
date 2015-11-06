@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Fitgem do
   before do
     @client = Fitgem::Client.new({
-      :consumer_key => '12345',
-      :consumer_secret => '67890'
+      :client_id => '12345',
+      :client_secret => '67890'
     })
   end
 

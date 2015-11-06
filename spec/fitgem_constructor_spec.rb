@@ -2,18 +2,18 @@ require 'spec_helper'
 
 describe Fitgem::Client do
   describe "constructor" do
-    it "requires consumer_key" do
+    it "requires client_id" do
       expect {
-        opts = { :consumer_secret => "12345" }
+        opts = { :client_secret => "12345" }
         client = Fitgem::Client.new(opts)
-      }.to raise_error(Fitgem::InvalidArgumentError, "Missing required options: consumer_key")
+      }.to raise_error(Fitgem::InvalidArgumentError, "Missing required options: client_id")
     end
 
-    it "requires consumer_secret" do
+    it "requires client_secret" do
       expect {
-        opts = { :consumer_key => "12345" }
+        opts = { :client_id => "12345" }
         client = Fitgem::Client.new(opts)
-      }.to raise_error(Fitgem::InvalidArgumentError, "Missing required options: consumer_secret")
+      }.to raise_error(Fitgem::InvalidArgumentError, "Missing required options: client_secret")
     end
   end
 end
