@@ -249,7 +249,7 @@ module Fitgem
       def extract_response_body(response)
         return {} if response.nil?
 
-        # raise ServiceUnavailableError if response.code == '503'
+        raise ServiceUnavailableError if response.status == 503
 
         response.body.nil? ? {} : JSON.parse(response.body)
       end
