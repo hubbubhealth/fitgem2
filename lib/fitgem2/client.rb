@@ -201,7 +201,7 @@ module Fitgem
 
     private
 
-      def client 
+      def client
         @client ||= OAuth2::Client.new(@client_id, @client_secret, {
           :site => 'https://api.fitbit.com',
           :authorize_url => 'https://www.fitbit.com/oauth2/authorize',
@@ -249,7 +249,7 @@ module Fitgem
       def extract_response_body(response)
         return {} if response.nil?
 
-        raise ServiceUnavailableError if response.code == '503'
+        # raise ServiceUnavailableError if response.code == '503'
 
         response.body.nil? ? {} : JSON.parse(response.body)
       end
