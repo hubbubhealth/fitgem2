@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Fitgem do
   before do
     @client = Fitgem::Client.new({
-      :consumer_key => '12345',
-      :consumer_secret => '67890'
+      :client_id => '12345',
+      :client_secret => '67890'
     })
   end
 
@@ -59,11 +59,11 @@ describe Fitgem do
     it 'resets the access token' do
       access_token = @client.reconnect('abc', '123')
       expect(access_token.token).to eq('abc')
-      expect(access_token.secret).to eq('123')
+      #expect(access_token.secret).to eq('123')
 
       access_token = @client.reconnect('def', '456')
       expect(access_token.token).to eq('def')
-      expect(access_token.secret).to eq('456')
+      #expect(access_token.secret).to eq('456')
     end
   end
 end

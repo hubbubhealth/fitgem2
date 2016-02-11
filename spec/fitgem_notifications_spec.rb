@@ -3,7 +3,7 @@ require 'ostruct'
 
 describe Fitgem::Client do
   before(:each) do
-    @client = Fitgem::Client.new({:consumer_key => '12345', :consumer_secret => '56789'})
+    @client = Fitgem::Client.new({:client_id => '12345', :client_secret => '56789'})
   end
 
   describe "#subscriptions" do

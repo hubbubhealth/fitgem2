@@ -152,7 +152,7 @@ module Fitgem
     #
     # @since v0.9.0
     def create_or_update_body_weight_goal(startDate, startWeight, goalWeight)
-      opts = {startDate: format_date(startDate), startWeight: startWeight, weight: goalWeight}
+      opts = {:startDate => format_date(startDate), :startWeight => startWeight, :weight => goalWeight}
       post("/user/#{@user_id}/body/log/weight/goal.json", opts)
     end
 
@@ -163,7 +163,7 @@ module Fitgem
     #
     # @since v0.9.0
     def create_or_update_body_fat_goal(fatPercentageGoal)
-      opts = {fat: fatPercentageGoal}
+      opts = {:fat => fatPercentageGoal}
       post("/user/#{@user_id}/body/log/fat/goal.json", opts)
     end
 

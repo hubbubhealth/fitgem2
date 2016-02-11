@@ -59,7 +59,7 @@ module Fitgem
     #
     # @return [Hash] Hash containing updated alarm settings
     def update_alarm(alarm_id, device_id, opts)
-      opts[:time] = format_time opts[:time], include_timezone: true
+      opts[:time] = format_time opts[:time], include_timezone => true
       post("/user/#{@user_id}/devices/tracker/#{device_id}/alarms/#{alarm_id}.json", opts)
     end
 

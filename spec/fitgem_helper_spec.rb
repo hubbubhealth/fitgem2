@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Fitgem::Client do
   before(:each) do
     @client = Fitgem::Client.new({
-      :consumer_key => '12345',
-      :consumer_secret => '67890'
+      :client_id => '12345',
+      :client_secret => '67890'
     })
   end
 
@@ -36,7 +36,7 @@ describe Fitgem::Client do
     it 'formats DateTime objects to the required date format' do
       span_start = DateTime.new(1997, 4, 18, 9, 30, 30)
       span_end = DateTime.new(1999, 10, 3, 15, 30, 30)
-      frag = @client.construct_date_range_fragment base_date: span_start, end_date: span_end
+      frag = @client.construct_date_range_fragment :base_date => span_start, :end_date => span_end
       expect(frag).to eq 'date/1997-04-18/1999-10-03'
     end
   end
@@ -109,17 +109,18 @@ describe Fitgem::Client do
     context "with a timezone" do
       it "accepts DateTime objects" do
         time = DateTime.parse("3rd Feb 2001 04:05:06 PM UTC")
-        expect(@client.format_time(time, include_timezone: true)).to eq "16:05+00:00"
+        expect(@client.format_time(time, :include_timezone => true)).to eq "16:05+00:00"
       end
 
       it "accepts Time objects" do
-        time = Time.new 2012, 1, 20, 13, 33, 30, "+00:00"
-        expect(@client.format_time(time, include_timezone: true)).to eq "13:33+00:00"
+        #time = Time.new 2012, 1, 20, 13, 33, 30, "+00:00"
+        time = Time.utc 2012, 1, 20, 13, 33, 30
+        expect(@client.format_time(time, :include_timezone => true)).to eq "13:33+00:00"
       end
 
       it "accepts the string 'now' to denote the current localtime" do
         now = DateTime.now
-        expect(@client.format_time('now', include_timezone: true)).to eq now.strftime("%H:%M%:z")
+        expect(@client.format_time('now', :include_timezone => true)).to eq now.strftime("%H:%M%:z")
       end
 
       it "accepts strings in HH:mm format" do
@@ -127,7 +128,7 @@ describe Fitgem::Client do
         allow(DateTime).to receive(:now).and_return datetime
 
         time = "04:20"
-        expect(@client.format_time(time, include_timezone: true)).to eq "04:20+08:00"
+        expect(@client.format_time(time, :include_timezone => true)).to eq "04:20+08:00"
       end
     end
 
