@@ -22,7 +22,7 @@ RSpec.describe Fitgem::Client do
   end
 
   it 'raises a service unavailable exception when the status is 503' do
-    allow(response).to receive(:code).and_return('503')
+    allow(response).to receive(:status).and_return('503')
 
     expect { client.user_info }.to raise_error(Fitgem::ServiceUnavailableError)
   end

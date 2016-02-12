@@ -73,6 +73,24 @@ module Fitgem
       get("/user/#{@user_id}/activities.json")
     end
 
+    # Get all of the logged heart rate from activities on the supplied date
+    #
+    # @param [Datetime] date the date to retrieve logged activities for
+    # @return [Hash] the activities logged on the supplied date
+    def heart_rate_activities_on_date(date)
+      get("/user/#{@user_id}/activities/heart/date/#{format_date(date)}.json")
+    end
+
+    # Get heart rate information from activity for a date range
+    #
+    # @param [String] activity to retrieve information for
+    # @param [Datetime] start of date range
+    # @param [Datetime] end of date range
+    # @return [Hash] activity information for the given date range
+    def heart_rate_activity_on_date_range(start, finish)
+      get("/user/#{@user_id}/activities/heart/date/#{format_date(start)}/#{format_date(finish)}.json")
+    end
+
     # ==========================================
     #         Goal Retrieval Methods
     # ==========================================
