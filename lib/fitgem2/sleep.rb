@@ -12,6 +12,16 @@ module Fitgem
       get("/user/#{@user_id}/sleep/date/#{format_date(date)}.json")
     end
 
+    # Get sleep data for time series
+    #
+    # @param [String] resource
+    # @param [DateTime, Date, String] date
+    # @param [String] period
+    # @return [Array] List of sleep items for the supplied date
+    def sleep_resource_for_time_series(resource,date,period)
+      get("/user/#{@user_id}/sleep/#{resource}/date/#{format_date(date)}/#{period}.json")
+    end
+
     # ==========================================
     #          Sleep Logging Methods
     # ==========================================
