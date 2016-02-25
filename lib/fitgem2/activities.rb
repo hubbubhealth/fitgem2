@@ -22,6 +22,16 @@ module Fitgem
       get("/user/#{@user_id}/activities/date/#{format_date(date)}.json")
     end
 
+    # Get activity data for time series
+    #
+    # @param [String] resource
+    # @param [DateTime, Date, String] date
+    # @param [String] period
+    # @return [Array] List of activity items for the supplied date
+    def activity_resource_for_time_series(resource, date, period)
+      get("/user/#{@user_id}/activities/#{resource}/date/#{format_date(date)}/#{period}.json")
+    end
+
     # Get activity information for a date range
     #
     # @param [String] activity to retrieve information for

@@ -18,7 +18,7 @@ module Fitgem
     # @param [DateTime, Date, String] date
     # @param [String] period
     # @return [Array] List of sleep items for the supplied date
-    def sleep_resource_for_time_series(resource,date,period)
+    def sleep_resource_for_time_series(resource, date, period)
       get("/user/#{@user_id}/sleep/#{resource}/date/#{format_date(date)}/#{period}.json")
     end
 
