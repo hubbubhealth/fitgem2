@@ -232,7 +232,8 @@ module Fitgem
         headers.merge!('User-Agent' => "fitgem gem v#{Fitgem::VERSION}", 'Accept-Language' => @api_unit_system,
                        'Accept-Locale' => @api_locale)
         uri = "/#{@api_version}#{path}"
-        access_token.post(uri, body, headers)
+        opts = { body: body, headers: headers }
+        access_token.post(uri, body: opts)
       end
 
       def delete(path, headers={})
