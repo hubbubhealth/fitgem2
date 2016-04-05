@@ -21,14 +21,14 @@ module Fitgem
     # @param [Hash] opts The notification subscription data
     # @option opts [Symbol] :type The type of subscription (valid
     #   values are :activities, :foods, :sleep, :body, and :all). REQUIRED
-    # @option opts [Integer, String] :subscriptionId The subscription id 
+    # @option opts [Integer, String] :subscriptionId The subscription id
     #
     # @return [Integer, Hash] An array containing the HTTP response code and
-    #   a hash containing confirmation information for the subscription.  
+    #   a hash containing confirmation information for the subscription.
     # @since v0.4.0
     def create_subscription(opts)
       resp = raw_post make_subscription_url(opts.merge({:use_subscription_id => true})), EMPTY_BODY, make_headers(opts)
-      [resp.code, extract_response_body(resp)]
+      [resp.status, extract_response_body(resp)]
     end
 
     # Removes a notification subscription
@@ -45,11 +45,11 @@ module Fitgem
     #   application, created via {http://dev.fitbit.com}
     #
     # @return [Integer, Hash] An array containing the HTTP response code and
-    #   a hash containing confirmation information for the subscription.  
+    #   a hash containing confirmation information for the subscription.
     # @since v0.4.0
     def remove_subscription(opts)
       resp = raw_delete make_subscription_url(opts.merge({:use_subscription_id => true})), make_headers(opts)
-      [resp.code, extract_response_body(resp)]
+      [resp.status, extract_response_body(resp)]
     end
 
     protected
@@ -61,7 +61,7 @@ module Fitgem
     #   :all)
     # @raise [Fitgem::InvalidArgumentError] Raised if the supplied type
     #   is not valid
-    # @return [Boolean] 
+    # @return [Boolean]
     def validate_subscription_type(subscription_type)
       unless subscription_type && SUBSCRIBABLE_TYPES.include?(subscription_type)
         raise Fitgem::InvalidArgumentError, "Invalid subscription type (valid values are #{SUBSCRIBABLE_TYPES.join(', ')})"

@@ -251,8 +251,8 @@ module Fitgem
         return {} if response.nil?
 
         raise ServiceUnavailableError if response.status == 503
-
-        response.body.nil? ? {} : JSON.parse(response.body)
+        body = response.body
+        (body.nil? || body.empty?) ? {} : JSON.parse(body)
       end
   end
 end
