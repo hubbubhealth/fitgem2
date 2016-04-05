@@ -6,7 +6,7 @@ RSpec.describe Fitgem::Client do
     :client_id => '12345',
     :client_secret => '67890'
   }) }
-  let(:response)     { double :body => {:foo => :bar}.to_json, :code => 200 }
+  let(:response)     { double :body => {:foo => :bar}.to_json, :status => 200 }
   let(:consumer)     { double 'Consumer' }
 
   before :each do
@@ -22,7 +22,7 @@ RSpec.describe Fitgem::Client do
   end
 
   it 'raises a service unavailable exception when the status is 503' do
-    allow(response).to receive(:status).and_return('503')
+    allow(response).to receive(:status).and_return(503)
 
     expect { client.user_info }.to raise_error(Fitgem::ServiceUnavailableError)
   end
